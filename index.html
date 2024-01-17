@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Police Feedback System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Police Feedback System</h1>
+    <form id="feedbackForm">
+      <label for="district">District:</label>
+      <select id="district" required>
+        <option value="Ajmer">Ajmer</option>
+        <option value="Alwar">Alwar</option>
+        <option value="Banswara">Banswara</option>
+        <option value="Baran">Baran</option>
+        
+      </select>
+
+      <label for="incidentType">Incident Type:</label>
+      <select id="incidentType" required>
+        <option value="traffic_stop">Traffic Stop</option>
+        <option value="arrest">Arrest</option>
+        <option value="search">Search</option>
+        <option value="drug abuse">Drug abuse</option>
+        <option value="other">Other</option>
+      </select>
+
+      <label for="feedback">Feedback:</label>
+      <textarea id="feedback" rows="4" required></textarea>
+
+      <button type="button" onclick="submitFeedback()">Submit Feedback</button>
+    </form>
+
+    <div id="confirmation" style="display:none;">
+      <p>Thank you for your feedback!</p>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
