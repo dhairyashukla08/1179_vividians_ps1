@@ -1,37 +1,41 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-
-const app = express();
-const port = 3000;
-
-// In-memory array to store feedback data
-const feedbackData = [];
-
-app.use(bodyParser.json());
-app.use(express.static('public')); // Assuming your HTML, CSS, and JS files are in a 'public' folder
-
-app.post('/submit-feedback', (req, res) => {
-  const { state, district, incidentType, feedbackText } = req.body;
-
-  // Validation (you might want to add more validation)
-  if (!state || !district || !incidentType || !feedbackText) {
-    return res.status(400).json({ error: 'All fields are required.' });
+// Your JavaScript code goes here
+function submitFeedback() {
+    const district = document.getElementById('district').value;
+    const incidentType = document.getElementById('incidentType').value;
+    const feedbackText = document.getElementById('feedback').value;
+  
+    const data = {
+      district: district,
+      incidentType: incidentType,
+      feedbackText: feedbackText
+    };
+  
+    fetch('/submit-feedback', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        displayConfirmation();
+      } else {
+        alert('Error submitting feedback. Please try again.');
+      }
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      alert('Error submitting feedback. Please try again.');
+    });
   }
-
-  // Store feedback data
-  const feedback = {
-    state,
-    district,
-    incidentType,
-    feedbackText,
-    timestamp: new Date().toISOString(),
-  };
-
-  feedbackData.push(feedback);
-
-  res.json({ success: true });
-});
-
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+  
+  function displayConfirmation() {
+    const feedbackForm = document.getElementById('feedbackForm');
+    const confirmationDiv = document.getElementById('confirmation');
+  
+    feedbackForm.style.display = 'none';
+    confirmationDiv.style.display = 'block';
+  }
+  
